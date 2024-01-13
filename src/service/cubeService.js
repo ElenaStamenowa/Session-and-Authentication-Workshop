@@ -1,4 +1,4 @@
-const uniqid = require("uniqid");
+const Cube = require("./../models/Cube");
 const cubes = [
   // {
   //   name,
@@ -20,14 +20,19 @@ const cubes = [
   // },
 ];
 
-exports.create = (cubeData) => {
-  const newCube = {
-    id: uniqid(),
-    ...cubeData,
-  };
+exports.create = async (cubeData) => {
+  // const cube = new Cube(cubeData);
+  // await cube.save();
 
-  cubes.push(newCube);
-  return newCube;
+  const cube = await Cube.create(cubeData);
+  return cube;
+  // const newCube = {
+  //   id: uniqid(),
+  //   ...cubeData,
+  // };
+
+  // cubes.push(newCube);
+  // return newCube;
 };
 
 exports.getAll = (search, from, to) => {
@@ -52,6 +57,5 @@ exports.getAll = (search, from, to) => {
   }
 };
 
-exports.getSingleCune = (id) => {
-  return cubes.find((cube) => cube.id === id);
-};
+exports.getSingleCube = (id) => Cube.findById(id);
+  // return cubes.find((cube) => cube.id === id)
