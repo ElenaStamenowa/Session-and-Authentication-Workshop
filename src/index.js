@@ -8,17 +8,21 @@ const dbConnect = require("./config/dbConfig");
 const { PORT } = require("./constants");
 const routes = require("./router");
 
-//connecting to the database
-dbConnect()
-  .then(() => console.log("Successfuly connected to the DB"))
-  .catch((err) => console.log(`Error while connecting in DB ${err}`));
-
 //local variables
 const app = express();
 
 // configs
 expressConfig(app);
 handlebarsConfig(app);
+
+//connecting to the database
+dbConnect()
+  .then(() => {
+    console.log("Successfuly connected to the DB");
+  })
+  .catch((err) => {
+    console.log(`error while connecting in DB: ${err}`);
+  });
 
 //routing
 app.use(routes);

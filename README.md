@@ -1,2 +1,2 @@
-# Session-and-Authentication-Workshop
-SoftUni Exercise
+# MongoDB-SoftUni-exercise
+Exercise with MongoDB - a simple site.
