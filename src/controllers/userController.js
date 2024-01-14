@@ -21,11 +21,9 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
   //find the user
   const { username, password } = req.body;
-  //console.log(username, " ", password);
-
   const user = await userService.login(username, password);
   //compare passwords
-
+  res.cookie("auth", token, { httpOnly: true });
   res.redirect("/");
 });
 
