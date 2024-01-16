@@ -19,6 +19,13 @@ const cubeSchema = new mongoose.Schema({
       ref: "Accessory", //the name of the model
     },
   ],
+
+  owner: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 const Cube = mongoose.model("Cube", cubeSchema);
