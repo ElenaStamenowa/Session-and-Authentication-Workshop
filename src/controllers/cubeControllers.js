@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const cubeService = require("../service/cubeService");
-const accessoryService = require("../service/accessoryService");
+const cubeService = require("../services/cubeService");
+const accessoryService = require("../services/accessoryService");
 const { difficultyLevelOptionsViewData } = require("../utils/viewData");
 //const { isAuth } = require("../middlewares/authMiddleware");
 

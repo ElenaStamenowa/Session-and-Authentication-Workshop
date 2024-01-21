@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const userService = require("../service/userService");
+const userService = require("../services/userService");
 
 router.get("/register", (req, res) => {
   res.render("user/register");
