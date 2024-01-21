@@ -2,6 +2,7 @@ const router = require("express").Router();
 const cubeService = require("../service/cubeService");
 const accessoryService = require("../service/accessoryService");
 const { difficultyLevelOptionsViewData } = require("../utils/viewData");
+//const { isAuth } = require("../middlewares/authMiddleware");
 
 router.get("/create", (req, res) => {
   res.render("cube/create");
@@ -30,14 +31,18 @@ router.get("/:cubeId/details", async (req, res) => {
     return;
   }
 
+  const isOwner = cube.owner?.toString() === req.user._id;
   // const accessories = cube.accessories;
   // const hasAccessories =
   //   accessories === undefined ? false : accessories.length > 0;
 
   //short syntax
   const hasAccessories = cube.accessories?.length > 0;
-  res.render("cube/details", { cube, hasAccessories });
+  res.render("cube/details", { cube, hasAccessories, isOwner });
 });
+
+//all lines down will look if you are authenticated
+//router.use(isAuth)
 
 //accessory attachment
 router.get("/:cubeId/attach-accessory", async (req, res) => {
@@ -67,7 +72,7 @@ router.get("/:cubeId/edit", async (req, res) => {
   const { cubeId } = req.params;
   const cube = await cubeService.getSingleCube(cubeId).lean();
 
-  //! This should be implemented everywhere for safetiness!
+  // This should be implemented everywhere for safetiness!
   if (cube.owner?.toString() !== req.user._id) {
     return res.redirect("/404");
   }
