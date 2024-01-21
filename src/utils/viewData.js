@@ -1,6 +1,31 @@
-const difficultyLevelOptionsViewData = (difficultyLevel) => {
+// const difficultyLevelOptionsViewData = (difficultyLevel) => {
+//   const titles = [
+//     "Very Easy",
+//     "Easy",
+//     "Medium (Standard 3x3)",
+//     "Intermediate",
+//     "Expert",
+//     "Hardcore",
+//   ];
+
+//   const options = titles.map((title, index) => {
+//     const value = index + 1;
+
+//     return {
+//       title: `${value} - ${title}`,
+//       value,
+//       selected: Number(difficultyLevel) === value,
+//     };
+//   });
+
+//   return options;
+// };
+
+// //module.exports = difficultyLevelOptionsViewData();
+// module.exports = difficultyLevelOptionsViewData;
+
+exports.difficultyLevelOptionsViewData = (difficultyLevel) => {
   const titles = [
-    "Very Easy",
     "Easy",
     "Medium (Standard 3x3)",
     "Intermediate",
@@ -10,7 +35,6 @@ const difficultyLevelOptionsViewData = (difficultyLevel) => {
 
   const options = titles.map((title, index) => {
     const value = index + 1;
-
     return {
       title: `${value} - ${title}`,
       value,
@@ -20,5 +44,3 @@ const difficultyLevelOptionsViewData = (difficultyLevel) => {
 
   return options;
 };
-
-module.exports = difficultyLevelOptionsViewData;
