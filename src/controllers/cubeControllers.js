@@ -1,9 +1,7 @@
 const router = require("express").Router();
 const cubeService = require("../service/cubeService");
-const accessorySevrice = require("../service/accessoryService");
-const {
-  difficultyLevelOptionsViewData: difficultyLevelOptionsViewData,
-} = require("../utils/viewData");
+const accessoryService = require("../service/accessoryService");
+const { difficultyLevelOptionsViewData } = require("../utils/viewData");
 
 router.get("/create", (req, res) => {
   res.render("cube/create");
@@ -49,10 +47,10 @@ router.get("/:cubeId/attach-accessory", async (req, res) => {
   //   ? cube.accessories.map((a) => a._id)
   //   : [];
 
-  const accessories = await accessorySevrice
+  const accessories = await accessoryService
     .getWithoutOwned(cube.accessories)
     .lean();
-  const hasAccessories = accessories.length > 0; //view data, template data
+  const hasAccessories = accessories.length > 0; // view data, template data
 
   res.render("accessory/attach", { cube, accessories, hasAccessories });
 });
@@ -68,6 +66,12 @@ router.post("/:cubeId/attach-accessory", async (req, res) => {
 router.get("/:cubeId/edit", async (req, res) => {
   const { cubeId } = req.params;
   const cube = await cubeService.getSingleCube(cubeId).lean();
+
+  //! This should be implemented everywhere for safetiness!
+  if (cube.owner?.toString() !== req.user._id) {
+    return res.redirect("/404");
+  }
+
   const options = difficultyLevelOptionsViewData(cube.difficultyLevel);
 
   res.render("cube/edit", { cube, options });
@@ -75,8 +79,8 @@ router.get("/:cubeId/edit", async (req, res) => {
 
 router.post("/:cubeId/edit", async (req, res) => {
   const { cubeId } = req.params;
-  const { name, imageUrl, difficultylevel, description } = req.body;
-  const payload = { name, imageUrl, difficultylevel, description };
+  const { name, imageUrl, difficultyLevel, description } = req.body;
+  const payload = { name, imageUrl, difficultyLevel, description };
 
   await cubeService.update(cubeId, payload);
 
@@ -92,7 +96,7 @@ router.get("/:cubeId/delete", async (req, res) => {
 });
 
 router.post("/:cubeId/delete", async (req, res) => {
-  await cubeService.delete(req.params);
+  await cubeService.delete(req.params.cubeId);
 
   res.redirect("/");
 });
