@@ -40,6 +40,7 @@ exports.getAll = async (search, from, to) => {
       (cube) => cube.difficultyLevel <= Number(to)
     );
   }
+
   return filterCubes;
 };
 
